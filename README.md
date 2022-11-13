@@ -31,20 +31,21 @@ JWT_SECRET_KEY='asdfghjkl'
 
 ##
 ## End Points
-### User Authentiation
+### User Authentiation 
 
 ```
 POST    /api/auth/login/
 to login
 Authentication: Public
-Request Data:
+Request Data:                                                
 {
     Email: EmailStr
     password: str
 }
 Errors:
-403 Invalid Credentials
-Response:
+403 - User not found
+403 - Incorrect Password
+Response:                                       
 {
     access_token: str
 }
@@ -59,102 +60,110 @@ username: str
 email: EmailStr
 password: str
 }
-Authentication: Public Level
 Errors: 
 400 Email Already in Use
 422 Invalid Request data
-Response: 201
+Response: 200 OK
 ```
 
 ### Clients
 
 ```
-GET   /api/v1/movie/list/
-To get the list of all the movies
-Query Params:                                                                                      
-limit: int -> to limit the number of return value (default=10)
-skip: int -> to skip initial return value (default=0)
-search: str -> search movies by name 
-Authentication: Public Level
+GET   /api/client/
+To get the list of all clients of logged-in user
+Authentication: User Level
+Authorization: Bearer Token
 Errors:
-400 Bad Request
-Response:
-[{
-    movie_id: int
-    name: str 
-    director: str
-    popularity: float
-    imdb_score: float
-    genre: str
-}]
+403 Not Authorized
+403 Your token is invalid,login
+403 Your token is expired,login
+Response: 200 OK
+[
+    {
+        "id": int
+        "name": str
+        "phone_number": str
+        "retainer_fees": str
+    }
+]
 ```
 ```
-GET   /api/v1/movie/{movie_id}/
-To get specific movie with Id
-Authentication: Public Level
+GET   /api/client/{id}/
+To get specific client with Id of logged-in user
+Authentication: User Level
 Errors:
 400 Bad Request
-404 No Movie with request movie_id
+403 Not Authorized
+403 Your token is invalid,login
+403 Your token is expired,login
+404 Not Found
 Response:
 {
-    movie_id: int
-    name: str 
-    director: str
-    popularity: float
-    imdb_score: float
-    genre: str
+    "id": int
+    "name": str
+    "phone_number": str
+    "retainer_fees": str
 }
 ```
 ```
-POST   /api/v1/movie/create/
-To create movie
-Authentication: Admin Level
+POST   /api/client/
+To create client of logged-in user
+Authentication: User Level
+Authorization: Bearer Token
 Request Data:
 {
-    name: str
-    director: str
-    popularity: float
-    imdb_score: Optional[float] (default=0)
-    genre: str
+    "name": str
+    "phone_number": str
+    "retainer_fees": str
 }
 Errors:
-400 Movie already exists
-401 Not Authorized
+403 Not Authorized
+403 Your token is invalid,login
+403 Your token is expired,login
 422 Invalid request data
-Response: 201
+Response: 201 Created
+{
+    "id": int
+    "name": str
+    "phone_number": str
+    "retainer_fees": str
+}
 ```
-```
-PUT   /api/v1/movie/update/{movie_id}/
-To update movie values
-Authentication: Admin Level
+PUT   /api/client/{id}
+To update client of logged-in user
+Authentication: User Level
+Authorization: Bearer Token
 Request Data:
 {
-    name: str
-    director: str
-    popularity: float
-    imdb_score: Optional[float] (default=0)
-    genre: str
+    "name": str
+    "phone_number": str
+    "retainer_fees": str
 }
 Errors:
-401 Not Authorized
-404 No Movie with request movie_id
-Response:
+400 Bad Request
+403 Not Authorized
+403 Your token is invalid,login
+403 Your token is expired,login
+404 Not Found
+422 Invalid request data
+Response: 200 OK
 {
-    movie_id: int
-    name: str 
-    director: str
-    popularity: float
-    imdb_score: float
-    genre: str
+    "id": int
+    "name": str
+    "phone_number": str
+    "retainer_fees": str
 }
 ```
-```
-DELETE   /api/v1/movie/delete/{movie_id}/
-To update movie values
-Authentication: Admin Level
+DELETE   /api/client/{id}
+To create client of logged-in user
+Authentication: User Level
+Authorization: Bearer Token
 Errors:
-401 Not Authorized
-404 No Movie with request movie_id
-Response: 204
+400 Bad Request
+403 Not Authorized
+403 Your token is invalid,login
+403 Your token is expired,login
+404 Not Found
+Response: 204 No Content
 ```
 
