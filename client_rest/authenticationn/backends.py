@@ -12,12 +12,11 @@ class JWTAuthentication(authentication.BaseAuthentication):
 
         if not auth_data:
             return None
-
+        
         token = auth_data.decode('utf-8').split(' ')
-
         try:
-            payload = jwt.decode(token, settings.JWT_SECRET_KEY, algorithms=["HS256"])
-
+            payload = jwt.decode(token[1], settings.JWT_SECRET_KEY, algorithms=["HS256"])
+            print(payload)
             user = User.objects.get(id=payload['id'])
             return (user, token)
 

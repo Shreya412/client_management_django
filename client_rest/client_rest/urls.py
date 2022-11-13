@@ -21,3 +21,4 @@ urlpatterns = [
     path('api/auth/', include('authenticationn.urls')),
     path('api/client/', include('client.urls')),
 ]
+

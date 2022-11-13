@@ -1,5 +1,4 @@
 
-
 # Create your views here.
 from django.shortcuts import render
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
@@ -17,8 +16,6 @@ class ClientList(ListCreateAPIView):
         serializer.save(owner=self.request.user)
 
     def get_queryset(self):
-        print(12345)
-        print(self.request)
         return Client.objects.filter(owner=self.request.user)
 
 
