@@ -22,7 +22,7 @@ JWT_SECRET_KEY='asdfghjkl'
 
 
 ### Database Design
-![DatabaseDesign](./images/database.jpg)
+![DatabaseDesign](./images/db.jpg)
 
 
 ### Access Level
