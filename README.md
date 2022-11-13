@@ -129,6 +129,7 @@ Response: 201 Created
     "retainer_fees": str
 }
 ```
+```
 PUT   /api/client/{id}
 To update client of logged-in user
 Authentication: User Level
@@ -153,6 +154,7 @@ Response: 200 OK
     "phone_number": str
     "retainer_fees": str
 }
+```
 ```
 DELETE   /api/client/{id}
 To create client of logged-in user
